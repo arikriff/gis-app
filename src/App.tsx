@@ -20,7 +20,22 @@ function App() {
   }));
   const mapView = React.useRef<MapView>();
   const citiesLayer = React.useRef(new FeatureLayer({
-    url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Cities/FeatureServer/0'
+    url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Cities/FeatureServer/0',
+    definitionExpression: "STATUS = 'National capital' OR STATUS = 'National and provincial capital' OR STATUS = 'National capital and provincial capital enclave'",
+    popupEnabled: true,
+    popupTemplate: {
+      title: "{CITY_NAME}",
+      content: [{
+        type: "fields",
+        fieldInfos: {
+          fieldName: "POP",
+          label: "Population",
+          format: {
+            digitSeparator: true
+          }
+        }
+      }]
+    }
   }));
   
   React.useEffect(() => {
@@ -35,7 +50,6 @@ function App() {
 
   return (
     <div className="App">
-      שלום!
       <div id="mapViewDiv" style={{ width: 1000, height: 500 }} />
     </div>
   );
